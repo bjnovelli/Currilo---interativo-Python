@@ -1,0 +1,134 @@
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+
+class CurriculoApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Currículo Interativo")
+        self.root.geometry("500x600")
+
+        self.frame_principal = tk.Frame(root)
+        self.frame_principal.pack(fill=tk.BOTH, expand=True)
+
+        self.frames = {}
+        for secao in ("Inicio", "Experiencia", "Formacao", "Habilidades", "Projetos"):
+            frame = tk.Frame(self.frame_principal)
+            self.frames[secao] = frame
+            frame.grid(row=0, column=0, sticky='nsew')
+
+        self.criar_tela_inicio()
+        self.criar_tela_experiencia()
+        self.criar_tela_formacao()
+        self.criar_tela_habilidades()
+        self.criar_tela_projetos()
+
+        self.mostrar_frame("Inicio")
+    
+    def mostrar_frame(self, nome):
+        frame = self.frames[nome]
+        frame.tkraise()
+    
+    def criar_tela_inicio(self):
+        frame = self.frames["Inicio"]
+        
+        label_nome = tk.Label(frame, text="Resumo Profissional", font=("Arial", 16, "bold"))
+        label_nome.pack(pady=10)
+        
+        try:
+            imagem = Image.open("foto.jpeg")  # Substitua por sua foto
+            imagem = imagem.resize((100, 100))
+            foto = ImageTk.PhotoImage(imagem)
+            label_foto = tk.Label(frame, image=foto)
+            label_foto.image = foto
+            label_foto.pack()
+        except:
+            tk.Label(frame, text="[Foto não encontrada]").pack()
+        
+        resumo_texto = (
+            "Profissional com mais de 10 anos de experiência nas áreas administrativa e financeira em tecnologia na infraestrutura.\n"
+            "Experiência em análise financeira, relatórios gerenciais e apoio à tomada de decisões estratégicas.\n"
+            "Conhecimento em Power BI, Excel, ServiceNow, monitoramento de sistemas e extração de dados.\n"
+            "Perfil proativo, analítico e focado na otimização de processos e eficiência operacional."
+        )
+        tk.Label(frame, text=resumo_texto, wraplength=450, justify="left").pack(pady=10)
+        
+        btn_exp = tk.Button(frame, text="Experiência", command=lambda: self.mostrar_frame("Experiencia"))
+        btn_exp.pack()
+        btn_form = tk.Button(frame, text="Formação", command=lambda: self.mostrar_frame("Formacao"))
+        btn_form.pack()
+        btn_hab = tk.Button(frame, text="Habilidades", command=lambda: self.mostrar_frame("Habilidades"))
+        btn_hab.pack()
+        btn_proj = tk.Button(frame, text="Projetos", command=lambda: self.mostrar_frame("Projetos"))
+        btn_proj.pack()
+    
+    def criar_tela_experiencia(self):
+        frame = self.frames["Experiencia"]
+        
+        tk.Label(frame, text="Experiência Profissional", font=("Arial", 14, "bold")).pack(pady=10)
+        experiencia_texto = (
+            "Motorola Solutions – Tier 1 - Service Desk (Desde Mai/2024)\n"
+            "- Suporte técnico de 1º nível com foco em segurança e comunicação.\n"
+            "- Monitoramento, escalonamento de incidentes e documentação técnica.\n"
+            "- Uso de Zabbix, Servidores Linux, Microsoft Server, ServiceNow.\n\n"
+            "Connectis – Support Analyst II (Jan/2024 – Maio/2024)\n"
+            "- Gestão de incidentes e mudanças (ServiceNow).\n"
+            "- Relatórios analíticos em Power BI para otimização de processos.\n"
+            "- Suporte técnico avançado.\n\n"
+            "Banco UBS – Estagiária de TI (Jun/2022 – Jan/2024)\n"
+            "- Suporte a sistemas corporativos e análise de incidentes.\n"
+            "- Melhorias em ferramentas de gestão (SalesForce e Looker).\n"
+            "- Atendimento ao cliente e emissão de relatórios via Excel e Power BI."
+        )
+        tk.Label(frame, text=experiencia_texto, wraplength=450, justify="left").pack()
+        
+        tk.Button(frame, text="Voltar", command=lambda: self.mostrar_frame("Inicio")).pack(pady=10)
+    
+    def criar_tela_formacao(self):
+        frame = self.frames["Formacao"]
+        
+        tk.Label(frame, text="Formação Acadêmica", font=("Arial", 14, "bold")).pack(pady=10)
+        formacao_texto = (
+            "- Ciências da Computação – UNIP (7º semestre, conclusão: Dez/2025)\n"
+            "- Engenharia de Software – UNICSUL (3º semestre, conclusão: Dez/2028)\n"
+            "- MBA em Controladoria de Empresas – UNIP (2020)\n"
+            "- Administração de Empresas – Universidade São Judas (2018)"
+        )
+        tk.Label(frame, text=formacao_texto, wraplength=450, justify="left").pack()
+        
+        tk.Button(frame, text="Voltar", command=lambda: self.mostrar_frame("Inicio")).pack(pady=10)
+    
+    def criar_tela_habilidades(self):
+        frame = self.frames["Habilidades"]
+        
+        tk.Label(frame, text="Habilidades Técnicas", font=("Arial", 14, "bold")).pack(pady=10)
+        habilidades_texto = (
+            "- Power BI, Looker\n"
+            "- ServiceNow, Zendesk, SalesForce\n"
+            "- Python, SQL\n"
+            "- Windows, Linux\n"
+            "- Inglês"
+        )
+        tk.Label(frame, text=habilidades_texto, wraplength=450, justify="left").pack()
+        
+        tk.Button(frame, text="Voltar", command=lambda: self.mostrar_frame("Inicio")).pack(pady=10)
+    
+    def criar_tela_projetos(self):
+        frame = self.frames["Projetos"]
+        
+        tk.Label(frame, text="Projetos e Conquistas", font=("Arial", 14, "bold")).pack(pady=10)
+        projetos_texto = (
+            "- Dashboards em Power BI para análise de KPIs.\n"
+            "- Melhorias em processos de monitoramento.\n"
+            "- CPA-20.\n"
+            "- Certificações: Python, Linux, SQL.\n"
+            "- Conhecimento em mercado financeiro."
+        )
+        tk.Label(frame, text=projetos_texto, wraplength=450, justify="left").pack()
+        
+        tk.Button(frame, text="Voltar", command=lambda: self.mostrar_frame("Inicio")).pack(pady=10)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CurriculoApp(root)
+    root.mainloop()
